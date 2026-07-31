@@ -110,7 +110,7 @@
 
   #bubble-field{
     position:relative; flex:1; margin: 4px 8px; z-index:1; min-height:120px;
-    display:flex; flex-wrap:wrap; align-content:flex-start; justify-content:center;
+    display:flex; flex-wrap:wrap; align-content:center; justify-content:center;
     gap:9px; padding:6px 4px 10px; overflow-y:auto; overflow-x:hidden;
   }
   .bubble{
@@ -126,13 +126,16 @@
   .bubble.locked{ pointer-events:none; }
   @keyframes bob{ 0%{transform:translateY(0) rotate(var(--r,0deg))} 50%{transform:translateY(-8px) rotate(var(--r,0deg))} 100%{transform:translateY(0) rotate(var(--r,0deg))} }
   .bubble.wrong-pulse{ border-color: var(--coral) !important; }
+  @keyframes shakeFull{ 0%,100%{transform:translateX(0)} 20%{transform:translateX(-8px)} 40%{transform:translateX(7px)} 60%{transform:translateX(-5px)} 80%{transform:translateX(4px)} }
+  .bubble.bin-full{ animation: shakeFull .4s ease !important; border-color:#B9C2DC !important; }
+  .arrow-icon{ width:13px; height:auto; display:inline-block; vertical-align:-1.5px; fill:currentColor; }
 
-  .bins{ flex-shrink:0; display:flex; gap:10px; padding: 6px 12px 16px; position:relative; z-index:1; }
-  .bin{ flex:1; border-radius:18px; padding: 10px 8px 8px; border: 2px dashed transparent; transition: all .18s ease; display:flex; flex-direction:column; }
-  .bin-head{ display:flex; align-items:center; gap:7px; padding: 0 2px 8px; }
-  .bin-icon{ width:26px; height:26px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:12px; flex-shrink:0; }
-  .bin-label{ font-family: var(--font-d); font-weight:700; font-size:11.5px; letter-spacing:.4px; }
-  .bin-count{ margin-left:auto; font-family:var(--font-m); font-size:10px; font-weight:700; }
+  .bins{ flex-shrink:0; display:flex; gap:12px; padding: 6px 14px 20px; position:relative; z-index:1; }
+  .bin{ flex:1; border-radius:20px; padding: 14px 10px 10px; border: 2px dashed transparent; transition: all .18s ease; display:flex; flex-direction:column; }
+  .bin-head{ display:flex; align-items:center; gap:8px; padding: 0 2px 10px; }
+  .bin-icon{ width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; flex-shrink:0; }
+  .bin-label{ font-family: var(--font-d); font-weight:700; font-size:13.5px; letter-spacing:.4px; }
+  .bin-count{ margin-left:auto; font-family:var(--font-m); font-size:11.5px; font-weight:700; }
 
   .bin-before{ background: linear-gradient(160deg,#EEF1F8,#E4E9F4); border-color:#D2DAEC; }
   .bin-before .bin-icon{ background:#DCE2F0; color:#5A6690; }
@@ -142,11 +145,11 @@
   .bin-after .bin-count{ color:var(--blue); }
   .bin.bin-hover{ transform: scale(1.035); border-color: var(--blue); box-shadow: 0 10px 24px rgba(47,128,237,.25); }
 
-  .bin-list{ flex:1; min-height:56px; max-height:112px; overflow-y:auto; display:flex; flex-direction:column; gap:5px; padding-right:2px; }
+  .bin-list{ flex:1; min-height:150px; max-height:260px; overflow-y:auto; display:flex; flex-direction:column; gap:7px; padding-right:2px; }
   .bin-list::-webkit-scrollbar{ width:3px; }
   .bin-list::-webkit-scrollbar-thumb{ background:rgba(0,0,0,.15); border-radius:3px; }
 
-  .li-item{ font-size:9.5px; line-height:1.3; padding:6px 7px; border-radius:8px; animation: dropIn .32s ease; display:flex; align-items:flex-start; justify-content:space-between; gap:6px; }
+  .li-item{ font-size:11.5px; line-height:1.4; padding:8px 9px; border-radius:10px; animation: dropIn .32s ease; display:flex; align-items:flex-start; justify-content:space-between; gap:6px; }
   @keyframes dropIn{ from{ opacity:0; transform: translateY(-10px) scale(.9);} to{ opacity:1; transform:translateY(0) scale(1);} }
   .li-text{ flex:1; }
   .li-badge{ flex-shrink:0; font-size:11px; font-weight:700; opacity:0; transform:scale(.5); transition: all .3s cubic-bezier(.34,1.56,.64,1); }
@@ -158,7 +161,7 @@
   .bin-before .li-item:nth-child(odd){ transform: rotate(-1.4deg); }
   .bin-before .li-item:nth-child(even){ transform: rotate(1.2deg); }
   .bin-after .li-item{ background:#FFFFFF; color:#0B5FBF; border-left:3px solid var(--blue); box-shadow:0 2px 5px rgba(16,33,79,.06); }
-  .bin-empty{ font-size:9.5px; color:#9AA7CC; text-align:center; padding-top:14px; font-style:italic; }
+  .bin-empty{ font-size:11px; color:#9AA7CC; text-align:center; padding-top:30px; font-style:italic; }
 
   /* ---------- RESULTS (Page 3) ---------- */
   #screen-results{ background: var(--paper); }
@@ -232,7 +235,7 @@
         <div class="rule-card"><div class="n">12</div><div class="l">SCENARIOS</div></div>
         <div class="rule-card"><div class="n">2</div><div class="l">CATEGORIES</div></div>
       </div>
-      <button class="btn-primary" id="btn-start">START GAME →</button>
+      <button class="btn-primary" id="btn-start">START GAME <svg class="arrow-icon" viewBox="0 0 30 25"><path d="M29.6344 13.3851L18.3844 24.6351C18.1498 24.8696 17.8317 25.0014 17.5 25.0014C17.1683 25.0014 16.8502 24.8696 16.6156 24.6351C16.3811 24.4005 16.2493 24.0824 16.2493 23.7507C16.2493 23.419 16.3811 23.1009 16.6156 22.8663L25.7328 13.7507H1.25C0.918479 13.7507 0.600537 13.619 0.366117 13.3846C0.131696 13.1502 0 12.8322 0 12.5007C0 12.1692 0.131696 11.8512 0.366117 11.6168C0.600537 11.3824 0.918479 11.2507 1.25 11.2507H25.7328L16.6156 2.13507C16.3811 1.90052 16.2493 1.5824 16.2493 1.25069C16.2493 0.91899 16.3811 0.600871 16.6156 0.36632C16.8502 0.131769 17.1683 0 17.5 0C17.8317 0 18.1498 0.131769 18.3844 0.36632L29.6344 11.6163C29.7506 11.7324 29.8428 11.8703 29.9057 12.022C29.9686 12.1738 30.001 12.3364 30.001 12.5007C30.001 12.665 29.9686 12.8276 29.9057 12.9794C29.8428 13.1311 29.7506 13.269 29.6344 13.3851Z"/></svg></button>
     </div>
   </div>
 
@@ -284,7 +287,7 @@
 
     <div class="results-footer">
       <div class="results-cta">Ready to claim your reward?</div>
-      <button class="btn-primary btn-done" id="btn-next">NEXT →</button>
+      <button class="btn-primary btn-done" id="btn-next">NEXT <svg class="arrow-icon" viewBox="0 0 30 25"><path d="M29.6344 13.3851L18.3844 24.6351C18.1498 24.8696 17.8317 25.0014 17.5 25.0014C17.1683 25.0014 16.8502 24.8696 16.6156 24.6351C16.3811 24.4005 16.2493 24.0824 16.2493 23.7507C16.2493 23.419 16.3811 23.1009 16.6156 22.8663L25.7328 13.7507H1.25C0.918479 13.7507 0.600537 13.619 0.366117 13.3846C0.131696 13.1502 0 12.8322 0 12.5007C0 12.1692 0.131696 11.8512 0.366117 11.6168C0.600537 11.3824 0.918479 11.2507 1.25 11.2507H25.7328L16.6156 2.13507C16.3811 1.90052 16.2493 1.5824 16.2493 1.25069C16.2493 0.91899 16.3811 0.600871 16.6156 0.36632C16.8502 0.131769 17.1683 0 17.5 0C17.8317 0 18.1498 0.131769 18.3844 0.36632L29.6344 11.6163C29.7506 11.7324 29.8428 11.8703 29.9057 12.022C29.9686 12.1738 30.001 12.3364 30.001 12.5007C30.001 12.665 29.9686 12.8276 29.9057 12.9794C29.8428 13.1311 29.7506 13.269 29.6344 13.3851Z"/></svg></button>
     </div>
   </div>
 
@@ -375,7 +378,7 @@
   }
 
   function resetState(){
-    state = { queue: buildQueue(), solved:0, correctCount:0, timeLeft:TIME_LIMIT, timerId:null, ended:false, revealed:false };
+    state = { queue: buildQueue(), solved:0, correctCount:0, countBefore:0, countAfter:0, timeLeft:TIME_LIMIT, timerId:null, ended:false, revealed:false };
   }
 
   function startGame(){
@@ -514,12 +517,28 @@
 
   function handleDrop(b, target){
     if(b.dataset.locked === '1') return;
+
+    // Each bin only ever holds 6 items (there are exactly 6 BEFORE and 6 AFTER
+    // scenarios) — once a bin is full, reject further drops there.
+    const currentCount = target==='before' ? state.countBefore : state.countAfter;
+    if(currentCount >= 6){
+      b.style.position = '';
+      b.style.left = '';
+      b.style.top = '';
+      b.style.margin = '';
+      b.style.transform = '';
+      b.classList.add('bin-full');
+      setTimeout(()=> b.classList.remove('bin-full'), 450);
+      return;
+    }
+
     b.dataset.locked = '1';
     b.classList.add('locked');
 
     const correct = b.dataset.cat === target;
     if(correct) state.correctCount++;
     state.solved++;
+    if(target==='before') state.countBefore++; else state.countAfter++;
 
     const rectB = b.getBoundingClientRect();
     const binEl = target==='before' ? binBefore : binAfter;
@@ -564,7 +583,7 @@
       const row = document.createElement('div');
       row.className = 'ans-row';
       row.innerHTML = `<div class="ans-module"><span class="num">${i+1}</span>${d.module}</div>
-        <div class="ans-pair"><div class="ans-cell b">${d.before}</div><div class="ans-arrow">→</div><div class="ans-cell a">${d.after}</div></div>`;
+        <div class="ans-pair"><div class="ans-cell b">${d.before}</div><div class="ans-arrow"><svg class="arrow-icon" viewBox="0 0 30 25"><path d="M29.6344 13.3851L18.3844 24.6351C18.1498 24.8696 17.8317 25.0014 17.5 25.0014C17.1683 25.0014 16.8502 24.8696 16.6156 24.6351C16.3811 24.4005 16.2493 24.0824 16.2493 23.7507C16.2493 23.419 16.3811 23.1009 16.6156 22.8663L25.7328 13.7507H1.25C0.918479 13.7507 0.600537 13.619 0.366117 13.3846C0.131696 13.1502 0 12.8322 0 12.5007C0 12.1692 0.131696 11.8512 0.366117 11.6168C0.600537 11.3824 0.918479 11.2507 1.25 11.2507H25.7328L16.6156 2.13507C16.3811 1.90052 16.2493 1.5824 16.2493 1.25069C16.2493 0.91899 16.3811 0.600871 16.6156 0.36632C16.8502 0.131769 17.1683 0 17.5 0C17.8317 0 18.1498 0.131769 18.3844 0.36632L29.6344 11.6163C29.7506 11.7324 29.8428 11.8703 29.9057 12.022C29.9686 12.1738 30.001 12.3364 30.001 12.5007C30.001 12.665 29.9686 12.8276 29.9057 12.9794C29.8428 13.1311 29.7506 13.269 29.6344 13.3851Z"/></svg></div><div class="ans-cell a">${d.after}</div></div>`;
       list.appendChild(row);
     });
   }
