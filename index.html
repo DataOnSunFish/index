@@ -33,15 +33,16 @@
   }
   #stage{
     position:relative;
-    width:min(480px, 100vw);
-    height:min(900px, 100vh);
+    width:480px;
+    height:900px;
+    flex-shrink:0;
     background: var(--paper);
     box-shadow: 0 30px 90px rgba(0,0,0,.55);
     overflow:hidden;
     display:flex; flex-direction:column;
     isolation:isolate;
+    transform-origin: center center;
   }
-  @media (min-width:481px) and (min-height:901px){ #stage{ border-radius: 30px; } }
 
   .screen{ position:absolute; inset:0; display:none; flex-direction:column; opacity:0; transition: opacity .4s ease; }
   .screen.active{ display:flex; opacity:1; }
@@ -321,6 +322,19 @@
 </div>
 
 <script>
+(function(){
+  // Scale the fixed 480x900 design to fill the actual screen (e.g. a large totem display)
+  // while preserving proportions — everything (text, icons, spacing) scales together.
+  function fitStage(){
+    const stage = document.getElementById('stage');
+    const scale = Math.min(window.innerWidth / 480, window.innerHeight / 900);
+    stage.style.transform = 'scale(' + scale + ')';
+  }
+  fitStage();
+  window.addEventListener('resize', fitStage);
+  window.addEventListener('orientationchange', fitStage);
+})();
+
 (function(){
   const DATA = [
     { module:"Time Attendance", before:"Attendance records are collected from different locations and systems.", after:"Attendance data is accessible through one centralized dashboard." },
